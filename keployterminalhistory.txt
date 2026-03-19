@@ -1,0 +1,791 @@
+
+        Test:
+        keploy test -c “npm start --prefix /path/to/node/app" --delay 10
+
+Java
+        Record:
+        keploy record -c "java -jar /path/to/java-project/target/jar"
+
+        Test:
+        keploy test -c "java -jar /path/to/java-project/target/jar" --delay 10
+
+Docker
+        Record:
+        keploy record -c "docker run -p 8080:8080 --name <containerName> --network <networkName> <applicationImage>" --buildDelay 60
+
+        Test:
+        keploy test -c "docker run -p 8080:8080 --name <containerName> --network <networkName> <applicationImage>" --delay 1 --buildDelay 60
+
+
+Note: If installed keploy without One Click Install, use "keploy example --customSetup true"
+
+burning_hoax@Nishant-mint:~/Self/keploynew$ git clone https://github.com/keploy/samples-go.git && cd samples-go/echo-sql
+Cloning into 'samples-go'...
+remote: Enumerating objects: 5390, done.
+remote: Counting objects: 100% (526/526), done.
+remote: Compressing objects: 100% (249/249), done.
+remote: Total 5390 (delta 376), reused 291 (delta 275), pack-reused 4864 (from 2)
+Receiving objects: 100% (5390/5390), 135.32 MiB | 2.97 MiB/s, done.
+Resolving deltas: 100% (3683/3683), done.
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ go mod download
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T18:14:57.232903935+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T18:14:57.323068719+05:30  INFO    Generated config file based on the flags that are used
+🐰 Keploy: 2026-03-18T18:14:57.324807209+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T18:14:57.324834293+05:30  INFO    Waiting for keploy-agent to be ready for docker compose...      {"Agent-uri": "http://localhost:44743/agent"}
+🐰 Keploy: 2026-03-18T18:14:57.325097804+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 11/12
+ ✔ Image g... Pulled                                                                                                                     30.3s
+ ✔ Volume ... Created                                                                                                                    0.0s
+ ⠋ Contain... Creating                                                                                                                   0.0s
+ ✘ Contain... Error response from daemon: Conflict. The container name "/96e69b3a3908_postgresDb" is already in use by container "96e69b3a39080e2049c930c22e1f048fb5c4f399831b41200053d9b8199e28f1". You have to remove (or rename) that container to be able to reuse that name. 0.0s
+Error response from daemon: Conflict. The container name "/96e69b3a3908_postgresDb" is already in use by container "96e69b3a39080e2049c930c22e1f048fb5c4f399831b41200053d9b8199e28f1". You have to remove (or rename) that container to be able to reuse that name.
+🐰 Keploy: 2026-03-18T18:15:57.864391016+05:30  WARN    timeout waiting for the container to stop       {"containerID": "echoApp"}
+🐰 Keploy: 2026-03-18T18:15:57.864547732+05:30  ERROR   error while running the app     {"error": "exit status 1"}
+^Z                                                          
+[1]+  Stopped                 keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T18:16:10.145942847+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T18:16:10.186509364+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T18:16:10.186617665+05:30  INFO    Waiting for keploy-agent to be ready for docker compose...      {"Agent-uri": "http://localhost:42375/agent"}
+🐰 Keploy: 2026-03-18T18:16:10.187096493+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 1/2
+ ⠋ Contain... Recreate                                                                                                                    0.0s
+ ✘ Contain... Error response from daemon: Conflict. The container name "/96e69b3a3908_postgresDb" is already in use by container "96e69b3a39080e2049c930c22e1f048fb5c4f399831b41200053d9b8199e28f1". You have to remove (or rename) that container to be able to reuse that name. 0.0s
+Error response from daemon: Conflict. The container name "/96e69b3a3908_postgresDb" is already in use by container "96e69b3a39080e2049c930c22e1f048fb5c4f399831b41200053d9b8199e28f1". You have to remove (or rename) that container to be able to reuse that name.
+🐰 Keploy: 2026-03-18T18:16:40.304647651+05:30  WARN    timeout waiting for the container to stop       {"containerID": "echoApp"}
+🐰 Keploy: 2026-03-18T18:16:40.304800036+05:30  ERROR   error while running the app     {"error": "exit status 1"}
+🐰 Keploy: 2026-03-18T18:18:10.188173138+05:30  ERROR   failed stopping keploy  {"error": "cannot stop keploy without a reason"}
+🐰 Keploy: 2026-03-18T18:18:10.18831035+05:30   ERROR   failed to stop recording        {"error": "cannot stop keploy without a reason"}
+🐰 Keploy: 2026-03-18T18:18:10.188332834+05:30  INFO    Stopping Keploy recording...
+🐰 Keploy: 2026-03-18T18:18:10.188778266+05:30  ERROR   failed to record        {"error": "keploy-agent did not become ready in time"}
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ docker compose down -v
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ sudo docker compose down -v
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] down 3/3
+ ✔ Container echoApp                 Removed                                                                                              0.2s
+ ✔ Container 96e69b3a3908_postgresDb Removed                                                                                              0.0s
+ ✔ Network echo-sql_babab            Removed                                                                                              0.2s
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T18:19:07.512001594+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T18:19:07.549135831+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T18:19:07.549177994+05:30  INFO    Waiting for keploy-agent to be ready for docker compose...      {"Agent-uri": "http://localhost:42889/agent"}
+🐰 Keploy: 2026-03-18T18:19:07.549796945+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 4/4
+ ✔ Network echo-sql_babab   Created                                                                                                       0.0s
+ ✔ Container postgresDb     Created                                                                                                       0.1s
+ ✔ Container keploy-v3-fb79 Recreated                                                                                                     0.1s
+ ✔ Container echoApp        Created                                                                                                       0.0s
+Attaching to echoApp, keploy-v3-9237, postgresDb
+postgresDb  | The files belonging to this database system will be owned by user "postgres".
+postgresDb  | This user must also own the server process.
+postgresDb  | 
+postgresDb  | The database cluster will be initialized with locale "en_US.utf8".
+postgresDb  | The default database encoding has accordingly been set to "UTF8".
+postgresDb  | The default text search configuration will be set to "english".
+postgresDb  | 
+postgresDb  | Data page checksums are disabled.
+postgresDb  | 
+postgresDb  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgresDb  | creating subdirectories ... ok
+postgresDb  | selecting default max_connections ... 100
+Container postgresDb Waiting 
+Container keploy-v3-9237 Waiting 
+postgresDb  | selecting default shared_buffers ... 128MB
+postgresDb  | selecting dynamic shared memory implementation ... posix
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:08Z        INFO    Generated config file based on the flags that are used
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:08Z        INFO    Starting the agent in   {"mode": "record"}
+postgresDb      | creating configuration files ... ok
+postgresDb      | running bootstrap script ... ok
+postgresDb      | performing post-bootstrap initialization ... ok
+postgresDb      | 
+postgresDb      | WARNING: enabling "trust" authentication for local connections
+postgresDb      | You can change this by editing pg_hba.conf or using the option -A, or
+postgresDb      | --auth-local and --auth-host, the next time you run initdb.
+postgresDb      | syncing data to disk ... ok
+postgresDb      | 
+postgresDb      | Success. You can now start the database server using:
+postgresDb      | 
+postgresDb      |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgresDb      | 
+postgresDb      | waiting for server to start....2026-03-18 12:49:08.835 UTC [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 12:49:08.851 UTC [43] LOG:  database system was shut down at 2026-03-18 12:49:08 UTC
+postgresDb      | 2026-03-18 12:49:08.856 UTC [42] LOG:  database system is ready to accept connections
+postgresDb      |  done
+postgresDb      | server started
+postgresDb      | 
+postgresDb      | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+postgresDb      | CREATE TABLE
+postgresDb      | 
+postgresDb      | 
+postgresDb      | 2026-03-18 12:49:08.971 UTC [42] LOG:  received fast shutdown request
+postgresDb      | waiting for server to shut down....2026-03-18 12:49:08.973 UTC [42] LOG:  aborting any active transactions
+postgresDb      | 2026-03-18 12:49:08.974 UTC [42] LOG:  worker process: logical replication launcher (PID 49) exited with exit code 1
+postgresDb      | 2026-03-18 12:49:08.974 UTC [44] LOG:  shutting down
+postgresDb      | 2026-03-18 12:49:08.996 UTC [42] LOG:  database system is shut down
+postgresDb      |  done
+postgresDb      | server stopped
+postgresDb      | 
+postgresDb      | PostgreSQL init process complete; ready for start up.
+postgresDb      | 
+postgresDb      | 2026-03-18 12:49:09.083 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb      | 2026-03-18 12:49:09.083 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgresDb      | 2026-03-18 12:49:09.086 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 12:49:09.097 UTC [60] LOG:  database system was shut down at 2026-03-18 12:49:08 UTC
+postgresDb      | 2026-03-18 12:49:09.101 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    recording start boottime set    {"ns": 5346817509626}
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    Proxy started at port:16789
+keploy-v3-9237  | 🐰 Keploy(agent): 2026-03-18T12:49:10Z        INFO    Starting Agent's HTTP server on :       {"port": 42889}
+🐰 Keploy: 2026-03-18T18:19:10.55321362+05:30   INFO    Keploy agent is ready to record test cases and mocks.
+Container postgresDb Healthy 
+Container keploy-v3-9237 Healthy 
+echoApp         | {"level":"info","ts":1773838153.59919,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773838153.599338,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773838153.599809,"caller":"app/handler.go:55","msg":"Pinging database..."}
+echoApp         | {"level":"info","ts":1773838153.60327,"caller":"app/handler.go:61","msg":"Ping successful"}
+echoApp         | {"level":"info","ts":1773838153.603311,"caller":"app/handler.go:64","msg":"Creating table if not exists..."}
+echoApp         | {"level":"info","ts":1773838153.60377,"caller":"app/handler.go:69","msg":"Table creation check passed"}
+echoApp         | {"level":"info","ts":1773838153.6037915,"caller":"app/main.go:63","msg":"Database connection established successfully"}
+echoApp         | 
+echoApp         |    ____    __
+echoApp         |   / __/___/ /  ___
+echoApp         |  / _// __/ _ \/ _ \
+echoApp         | /___/\__/_//_/\___/ v4.9.0
+echoApp         | High performance, minimalist Go web framework
+echoApp         | https://echo.labstack.com
+echoApp         | ____________________________________O/_______
+echoApp         |                                     O\
+echoApp         | ⇨ http server started on [::]:50732
+^Z
+[2]+  Stopped                 keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ kill -9 %1 %2 %3 %4
+bash: kill: %3: no such job
+bash: kill: %4: no such job
+[1]-  Killed                  keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+[2]+  Killed                  keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T18:33:30.471947448+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T18:33:30.511933773+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T18:33:30.511979205+05:30  INFO    Waiting for keploy-agent to be ready for docker compose...      {"Agent-uri": "http://localhost:44625/agent"}
+🐰 Keploy: 2026-03-18T18:33:30.512195125+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 3/3
+ ✔ Container postgresDb     Running                                                                                       0.0s
+ ✔ Container keploy-v3-9237 Recreated                                                                                     0.6s
+ ✔ Container echoApp        Recreated                                                                                     0.1s
+Attaching to echoApp, keploy-v3-ad2d, postgresDb
+Container postgresDb Waiting 
+Container keploy-v3-ad2d Waiting 
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:31Z        INFO    Generated config file based on the flags that are used
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:31Z        INFO    Starting the agent in   {"mode": "record"}
+Container postgresDb Healthy 
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    recording start boottime set    {"ns": 6210073443229}
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    Proxy started at port:38091
+keploy-v3-ad2d  | 🐰 Keploy(agent): 2026-03-18T13:03:33Z        INFO    Starting Agent's HTTP server on :       {"port": 44625}
+🐰 Keploy: 2026-03-18T18:33:33.516095664+05:30  INFO    Keploy agent is ready to record test cases and mocks.
+Container keploy-v3-ad2d Healthy 
+echoApp         | {"level":"info","ts":1773839016.9522927,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773839016.9523246,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773839016.9523401,"caller":"app/handler.go:55","msg":"Pinging database..."}
+echoApp         | {"level":"info","ts":1773839016.9550385,"caller":"app/handler.go:61","msg":"Ping successful"}
+echoApp         | {"level":"info","ts":1773839016.9550626,"caller":"app/handler.go:64","msg":"Creating table if not exists..."}
+echoApp         | {"level":"info","ts":1773839016.955473,"caller":"app/handler.go:69","msg":"Table creation check passed"}
+echoApp         | {"level":"info","ts":1773839016.955506,"caller":"app/main.go:63","msg":"Database connection established successfully"}
+echoApp         | 
+echoApp         |    ____    __
+echoApp         |   / __/___/ /  ___
+echoApp         |  / _// __/ _ \/ _ \
+echoApp         | /___/\__/_//_/\___/ v4.9.0
+echoApp         | High performance, minimalist Go web framework
+echoApp         | https://echo.labstack.com
+echoApp         | ____________________________________O/_______
+echoApp         |                                     O\
+echoApp         | ⇨ http server started on [::]:64266
+🐰 Keploy: 2026-03-18T18:39:06.315075719+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-1"}
+🐰 Keploy: 2026-03-18T18:54:50.91956939+05:30   INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-2"}
+🐰 Keploy: 2026-03-18T18:56:48.430864496+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-3"}
+🐰 Keploy: 2026-03-18T18:56:57.027728094+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-4"}
+🐰 Keploy: 2026-03-18T18:58:57.894354011+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-5"}
+🐰 Keploy: 2026-03-18T18:59:07.416906411+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-2/tests", "testcase name": "test-6"}
+^CSignal received: interrupt, canceling context...
+🐰 Keploy: 2026-03-18T19:02:26.381425275+05:30  INFO    Stopping Keploy recording...
+Gracefully Stopping... press Ctrl+C again to force
+Container echoApp Stopping 
+Container echoApp Stopped 
+Container keploy-v3-ad2d Stopping 
+Container postgresDb Stopping 
+Container postgresDb Stopped 
+Container keploy-v3-ad2d Stopped 
+w Enable Watch   d Detach
+🐰 Keploy: 2026-03-18T19:02:28.386046484+05:30  INFO    Cleaning up running operations...
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ ls -R keploy/
+keploy/:
+testReports  test-set-0  test-set-1  test-set-2
+
+keploy/testReports:
+report-1.yaml  report-2.yaml  report-3.yaml
+
+keploy/test-set-0:
+mocks.yaml  tests
+
+keploy/test-set-0/tests:
+test-1.yaml
+
+keploy/test-set-1:
+mocks.yaml
+
+keploy/test-set-2:
+mocks.yaml  tests
+
+keploy/test-set-2/tests:
+test-1.yaml  test-2.yaml  test-3.yaml  test-4.yaml  test-5.yaml  test-6.yaml
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ sudo -E PATH=$PATH keploy test -c "./echo-psql-url-shortener"
+[sudo] password for burning_hoax:         
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:45:27.140021567+05:30  WARN    Delay is set to 5 seconds, incase your app takes more time to start use --delay to set custom delay
+🐰 Keploy: 2026-03-18T19:45:27.140064837+05:30  INFO    Example usage: keploy test -c "/path/to/user/app" --delay 6
+🐰 Keploy: 2026-03-18T19:45:27.140158897+05:30  INFO    Test Sets to be Replayed        {"testSets": ["test-set-1", "test-set-0", "test-set-2"]}
+🐰 Keploy: 2026-03-18T19:45:27.140481482+05:30  WARN    failed to detect language, skipping coverage caluclation. please use --language to manually set the language
+🐰 Keploy(agent): 2026-03-18T19:45:27+05:30     INFO    Starting the agent in   {"mode": "test"}
+🐰 Keploy(agent): 2026-03-18T19:45:30+05:30     INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+🐰 Keploy(agent): 2026-03-18T19:45:30+05:30     INFO    starting TCP DNS server at addr :26789
+🐰 Keploy(agent): 2026-03-18T19:45:30+05:30     INFO    Proxy started at port:16789
+🐰 Keploy(agent): 2026-03-18T19:45:30+05:30     INFO    starting UDP DNS server at addr :26789
+🐰 Keploy(agent): 2026-03-18T19:45:30+05:30     INFO    Starting Agent's HTTP server on :       {"port": 41557}
+🐰 Keploy: 2026-03-18T19:45:31.979314593+05:30  WARN    Failed to Authenticate user, continuing with local mock if present   {"reason": "failed to authenticate: Error in validating the github user"}
+🐰 Keploy: 2026-03-18T19:45:31.979503421+05:30  INFO    running {"test-set": "test-set-0", "attempt": 1}
+🐰 Keploy: 2026-03-18T19:45:31.981687165+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.981858745+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.981926003+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982050787+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982106156+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982254415+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982325382+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982395857+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982505116+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982616792+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982720803+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982781273+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.98288182+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.982936113+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.9830333+05:30    ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.983101788+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.983166907+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.983275537+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:45:31.986205954+05:30  INFO    Starting Application :  {"executing_cmd": "/usr/bin/sh -c ./echo-psql-url-shortener"}
+sh: 1: ./echo-psql-url-shortener: not found
+🐰 Keploy: 2026-03-18T19:45:31.987007446+05:30  ERROR   error while running the app     {"error": "exit status 127"}
+🐰 Keploy: 2026-03-18T19:45:31.987073798+05:30  ERROR   application failed to run       {"error": "an unexpected error occurred: exit status 127"}
+🐰 Keploy: 2026-03-18T19:45:31.987257489+05:30  INFO    stopping Keploy {"reason": "failed to run test set: context canceled"}
+🐰 Keploy: 2026-03-18T19:45:31.987368614+05:30  INFO    Stopping keploy agent
+🐰 Keploy(agent): 2026-03-18T19:45:31+05:30     INFO    stopping Keploy {"reason": "stop requested via agent API"}
+🐰 Keploy: 2026-03-18T19:45:31.987509252+05:30  INFO    Keploy agent stopped.
+🐰 Keploy: 2026-03-18T19:45:32.051281304+05:30  ERROR   failed to replay        {"error": "failed to run test set: context canceled"}
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy test -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T19:46:07.991724182+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:46:08.030989456+05:30  WARN    Delay is set to 5 seconds, incase your app takes more time to start use --delay to set custom delay
+🐰 Keploy: 2026-03-18T19:46:08.03106187+05:30   INFO    Example usage: keploy test -c "/path/to/user/app" --delay 6
+🐰 Keploy: 2026-03-18T19:46:08.031211864+05:30  INFO    Test Sets to be Replayed        {"testSets": ["test-set-1", "test-set-0", "test-set-2"]}
+🐰 Keploy: 2026-03-18T19:46:08.031408375+05:30  WARN    failed to detect language, skipping coverage caluclation. please use --language to manually set the language
+🐰 Keploy: 2026-03-18T19:46:08.032998832+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T19:46:08.838515395+05:30  WARN    Failed to Authenticate user, continuing with local mock if present   {"reason": "failed to authenticate: Error in validating the github user"}
+🐰 Keploy: 2026-03-18T19:46:08.838618933+05:30  INFO    running {"test-set": "test-set-0", "attempt": 1}
+🐰 Keploy: 2026-03-18T19:46:08.839206939+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 2/2
+ ✔ Container keploy-v3-ad2d Recreated                                                                                     0.1s
+ ✔ Container echoApp        Recreated                                                                                     0.1s
+Attaching to echoApp, keploy-v3-aadf, postgresDb
+Container postgresDb Waiting 
+Container keploy-v3-aadf Waiting 
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:09Z        INFO    Generated config file based on the flags that are used
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:09Z        INFO    Starting the agent in   {"mode": "test"}
+postgresDb      | 2026-03-18 14:16:09.340 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb      | 2026-03-18 14:16:09.340 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgresDb      | 2026-03-18 14:16:09.344 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:16:09.354 UTC [23] LOG:  database system was shut down at 2026-03-18 13:32:26 UTC
+postgresDb      | 2026-03-18 14:16:09.358 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    recording start boottime set    {"ns": 10567950398766}
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    Proxy started at port:16789
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:11Z        INFO    Starting Agent's HTTP server on :       {"port": 40717}
+🐰 Keploy: 2026-03-18T19:46:11.843603926+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.843786389+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.84386127+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.843964033+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.844014288+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.845316706+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.84537963+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.845441301+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.845537942+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.845606198+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.84587396+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.84591908+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.846008144+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.846065834+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.84616468+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.846235249+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.846299472+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:46:11.846401833+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+Container keploy-v3-aadf Healthy 
+Container postgresDb Healthy 
+echoApp         | {"level":"info","ts":1773843374.8613057,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773843374.8614433,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773843374.8618293,"caller":"app/handler.go:55","msg":"Pinging database..."}
+keploy-v3-aadf  | 🐰 Keploy(agent): 2026-03-18T14:16:14Z        ERROR   No matching mock found for the request, closing connection to prevent application hang        {"Type": "postgres_v2", "Client ConnectionID": "0", "Destination ConnectionID": "1", "Client IP Address": "172.18.0.2:48218", "base64Requests": ["AAAAZgADAAB1c2VyAHBvc3RncmVzAGNsaWVudF9lbmNvZGluZwBVVEY4AGV4dHJhX2Zsb2F0X2RpZ2l0cwAyAGRhdGFiYXNlAHBvc3RncmVzAGRhdGVzdHlsZQBJU08sIE1EWQAA"]}
+echoApp         | {"level":"error","ts":1773843374.883938,"caller":"app/handler.go:58","msg":"Ping failed","error":"EOF","stacktrace":"main.NewConnection\n\t/app/handler.go:58\nmain.main\n\t/app/main.go:46\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp         | {"level":"error","ts":1773843374.8839903,"caller":"app/main.go:59","msg":"Failed to sync logger","error":"sync /dev/stderr: invalid argument","stacktrace":"main.main\n\t/app/main.go:59\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp         | {"level":"fatal","ts":1773843374.8840077,"caller":"app/main.go:61","msg":"Failed to establish connection to local PostgreSQL instance:","error":"EOF","stacktrace":"main.main\n\t/app/main.go:61\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp exited with code 1
+Aborting on container exit...
+Container echoApp Stopping 
+Container echoApp Stopped 
+Container keploy-v3-aadf Stopping 
+Container postgresDb Stopping 
+keploy-v3-aadf  | Signal received: terminated, canceling context...
+postgresDb      | 2026-03-18 14:16:14.939 UTC [1] LOG:  received smart shutdown request
+postgresDb      | 2026-03-18 14:16:14.944 UTC [1] LOG:  worker process: logical replication launcher (PID 29) exited with exit code 1
+postgresDb      | 2026-03-18 14:16:14.944 UTC [24] LOG:  shutting down
+postgresDb      | 2026-03-18 14:16:14.961 UTC [1] LOG:  database system is shut down
+Container keploy-v3-aadf Stopped 
+keploy-v3-aadf exited with code 0
+Container postgresDb Stopped 
+postgresDb exited with code 0
+
+🐰 Keploy: 2026-03-18T19:46:16.498539059+05:30  ERROR   error while running the app     {"error": "exit status 1"}
+🐰 Keploy: 2026-03-18T19:46:16.498699652+05:30  ERROR   application failed to run       {"error": "an unexpected error occurred: exit status 1"}
+🐰 Keploy: 2026-03-18T19:46:16.499041165+05:30  INFO    stopping Keploy {"reason": "failed to run test set: context canceled"}
+🐰 Keploy: 2026-03-18T19:46:16.499164987+05:30  ERROR   failed to replay        {"error": "failed to run test set: context canceled"}
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ docker compose down -v
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ sudo docker compose down -v
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] down 3/3
+ ✔ Container echoApp      Removed                                                                                         0.0s
+ ✔ Container postgresDb   Removed                                                                                         0.0s
+ ✔ Network echo-sql_babab Removed                                                                                         0.2s
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy test -c "docker compose up" --container-name "echoApp" --build-delay 50 --delay 10
+🐰 Keploy: 2026-03-18T19:49:34.607011995+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:49:34.666787578+05:30  INFO    Test Sets to be Replayed        {"testSets": ["test-set-1", "test-set-0", "test-set-2"]}
+🐰 Keploy: 2026-03-18T19:49:34.666893388+05:30  WARN    failed to detect language, skipping coverage caluclation. please use --language to manually set the language
+🐰 Keploy: 2026-03-18T19:49:34.66804665+05:30   INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T19:49:35.463750508+05:30  WARN    Failed to Authenticate user, continuing with local mock if present   {"reason": "failed to authenticate: Error in validating the github user"}
+🐰 Keploy: 2026-03-18T19:49:35.463816619+05:30  INFO    running {"test-set": "test-set-0", "attempt": 1}
+🐰 Keploy: 2026-03-18T19:49:35.464353195+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 4/4
+ ✔ Network echo-sql_babab   Created                                                                                       0.0s
+ ✔ Container postgresDb     Created                                                                                       0.1s
+ ✔ Container keploy-v3-aadf Recreated                                                                                     0.1s
+ ✔ Container echoApp        Created                                                                                       0.0s
+Attaching to echoApp, keploy-v3-e5d2, postgresDb
+postgresDb  | The files belonging to this database system will be owned by user "postgres".
+postgresDb  | This user must also own the server process.
+postgresDb  | 
+postgresDb  | The database cluster will be initialized with locale "en_US.utf8".
+postgresDb  | The default database encoding has accordingly been set to "UTF8".
+postgresDb  | The default text search configuration will be set to "english".
+postgresDb  | 
+postgresDb  | Data page checksums are disabled.
+postgresDb  | 
+postgresDb  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgresDb  | creating subdirectories ... ok
+postgresDb  | selecting default max_connections ... 100
+postgresDb  | selecting default shared_buffers ... 128MB
+postgresDb  | selecting dynamic shared memory implementation ... posix
+Container postgresDb Waiting 
+Container keploy-v3-e5d2 Waiting 
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:35Z        INFO    Generated config file based on the flags that are used
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:35Z        INFO    Starting the agent in   {"mode": "test"}
+postgresDb      | creating configuration files ... ok
+postgresDb      | running bootstrap script ... ok
+postgresDb      | performing post-bootstrap initialization ... ok
+postgresDb      | syncing data to disk ... ok
+postgresDb      | 
+postgresDb      | Success. You can now start the database server using:
+postgresDb      | 
+postgresDb      |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgresDb      | 
+postgresDb      | 
+postgresDb      | WARNING: enabling "trust" authentication for local connections
+postgresDb      | You can change this by editing pg_hba.conf or using the option -A, or
+postgresDb      | --auth-local and --auth-host, the next time you run initdb.
+postgresDb      | waiting for server to start....2026-03-18 14:19:36.623 UTC [43] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:19:36.635 UTC [44] LOG:  database system was shut down at 2026-03-18 14:19:36 UTC
+postgresDb      | 2026-03-18 14:19:36.639 UTC [43] LOG:  database system is ready to accept connections
+postgresDb      |  done
+postgresDb      | server started
+postgresDb      | 
+postgresDb      | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+postgresDb      | CREATE TABLE
+postgresDb      | 
+postgresDb      | 
+postgresDb      | 2026-03-18 14:19:36.749 UTC [43] LOG:  received fast shutdown request
+postgresDb      | waiting for server to shut down....2026-03-18 14:19:36.751 UTC [43] LOG:  aborting any active transactions
+postgresDb      | 2026-03-18 14:19:36.752 UTC [43] LOG:  worker process: logical replication launcher (PID 50) exited with exit code 1
+postgresDb      | 2026-03-18 14:19:36.752 UTC [45] LOG:  shutting down
+postgresDb      | 2026-03-18 14:19:36.774 UTC [43] LOG:  database system is shut down
+postgresDb      |  done
+postgresDb      | server stopped
+postgresDb      | 
+postgresDb      | PostgreSQL init process complete; ready for start up.
+postgresDb      | 
+postgresDb      | 2026-03-18 14:19:36.857 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb      | 2026-03-18 14:19:36.857 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgresDb      | 2026-03-18 14:19:36.861 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:19:36.871 UTC [61] LOG:  database system was shut down at 2026-03-18 14:19:36 UTC
+postgresDb      | 2026-03-18 14:19:36.876 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    recording start boottime set    {"ns": 10774519178373}
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    Proxy started at port:16789
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:37Z        INFO    Starting Agent's HTTP server on :       {"port": 40075}
+🐰 Keploy: 2026-03-18T19:49:38.468458308+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.468597389+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.46865092+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.468750298+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.46880381+05:30   ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.468916718+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.468984114+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469049694+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469160344+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469238972+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469347856+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469397399+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469494902+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469541401+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469645152+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469706091+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469773233+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+🐰 Keploy: 2026-03-18T19:49:38.469882039+05:30  ERROR   failed to unmarshal a mock yaml doc of unknown type     {"type": "Postgres"}
+Container postgresDb Healthy 
+Container keploy-v3-e5d2 Healthy 
+echoApp         | {"level":"info","ts":1773843581.4622278,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773843581.4622672,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773843581.4622915,"caller":"app/handler.go:55","msg":"Pinging database..."}
+keploy-v3-e5d2  | 🐰 Keploy(agent): 2026-03-18T14:19:41Z        ERROR   No matching mock found for the request, closing connection to prevent application hang        {"Type": "postgres_v2", "Client ConnectionID": "0", "Destination ConnectionID": "1", "Client IP Address": "172.18.0.3:49680", "base64Requests": ["AAAAZgADAABkYXRlc3R5bGUASVNPLCBNRFkAZXh0cmFfZmxvYXRfZGlnaXRzADIAdXNlcgBwb3N0Z3JlcwBkYXRhYmFzZQBwb3N0Z3JlcwBjbGllbnRfZW5jb2RpbmcAVVRGOAAA"]}
+echoApp         | {"level":"error","ts":1773843581.483615,"caller":"app/handler.go:58","msg":"Ping failed","error":"EOF","stacktrace":"main.NewConnection\n\t/app/handler.go:58\nmain.main\n\t/app/main.go:46\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp         | {"level":"error","ts":1773843581.4836614,"caller":"app/main.go:59","msg":"Failed to sync logger","error":"sync /dev/stderr: invalid argument","stacktrace":"main.main\n\t/app/main.go:59\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp         | {"level":"fatal","ts":1773843581.4836771,"caller":"app/main.go:61","msg":"Failed to establish connection to local PostgreSQL instance:","error":"EOF","stacktrace":"main.main\n\t/app/main.go:61\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"}
+echoApp exited with code 1
+Aborting on container exit...
+Container echoApp Stopping 
+Container echoApp Stopped 
+Container postgresDb Stopping 
+Container keploy-v3-e5d2 Stopping 
+postgresDb      | 2026-03-18 14:19:41.538 UTC [1] LOG:  received smart shutdown request
+keploy-v3-e5d2  | Signal received: terminated, canceling context...
+postgresDb      | 2026-03-18 14:19:41.542 UTC [1] LOG:  worker process: logical replication launcher (PID 67) exited with exit code 1
+postgresDb      | 2026-03-18 14:19:41.542 UTC [62] LOG:  shutting down
+postgresDb      | 2026-03-18 14:19:41.559 UTC [1] LOG:  database system is shut down
+Container postgresDb Stopped 
+postgresDb exited with code 0
+Container keploy-v3-e5d2 Stopped 
+keploy-v3-e5d2 exited with code 0
+
+🐰 Keploy: 2026-03-18T19:49:43.171671148+05:30  ERROR   error while running the app     {"error": "exit status 1"}
+🐰 Keploy: 2026-03-18T19:49:43.171747477+05:30  ERROR   application failed to run       {"error": "an unexpected error occurred: exit status 1"}
+🐰 Keploy: 2026-03-18T19:49:43.171951503+05:30  INFO    stopping Keploy {"reason": "failed to run test set: context canceled"}
+🐰 Keploy: 2026-03-18T19:49:43.172036027+05:30  ERROR   failed to replay        {"error": "failed to run test set: context canceled"}
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ sudo rm -rf keploy/
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T19:51:39.378341786+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:51:39.416956586+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T19:51:39.416998659+05:30  INFO    Waiting for keploy-agent to be ready for docker compose...      {"Agent-uri": "http://localhost:40009/agent"}
+🐰 Keploy: 2026-03-18T19:51:39.417229652+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 2/2
+ ✔ Container keploy-v3-e5d2 Recreated                                                                                     0.1s
+ ✔ Container echoApp        Recreated                                                                                     0.1s
+Attaching to echoApp, keploy-v3-f31a, postgresDb
+Container keploy-v3-f31a Waiting 
+Container postgresDb Waiting 
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:39Z        INFO    Generated config file based on the flags that are used
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:39Z        INFO    Starting the agent in   {"mode": "record"}
+postgresDb      | 2026-03-18 14:21:39.869 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb      | 2026-03-18 14:21:39.869 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgresDb      | 2026-03-18 14:21:39.873 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:21:39.885 UTC [23] LOG:  database system was shut down at 2026-03-18 14:19:41 UTC
+postgresDb      | 2026-03-18 14:21:39.889 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    recording start boottime set    {"ns": 10898446290178}
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    Proxy started at port:16789
+keploy-v3-f31a  | 🐰 Keploy(agent): 2026-03-18T14:21:41Z        INFO    Starting Agent's HTTP server on :       {"port": 40009}
+🐰 Keploy: 2026-03-18T19:51:42.420829556+05:30  INFO    Keploy agent is ready to record test cases and mocks.
+Container keploy-v3-f31a Healthy 
+Container postgresDb Healthy 
+echoApp         | {"level":"info","ts":1773843705.4019272,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773843705.4019606,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773843705.4019773,"caller":"app/handler.go:55","msg":"Pinging database..."}
+echoApp         | {"level":"info","ts":1773843705.4048743,"caller":"app/handler.go:61","msg":"Ping successful"}
+echoApp         | {"level":"info","ts":1773843705.4049041,"caller":"app/handler.go:64","msg":"Creating table if not exists..."}
+echoApp         | {"level":"info","ts":1773843705.4052565,"caller":"app/handler.go:69","msg":"Table creation check passed"}
+echoApp         | {"level":"info","ts":1773843705.4052708,"caller":"app/main.go:63","msg":"Database connection established successfully"}
+echoApp         | 
+echoApp         |    ____    __
+echoApp         |   / __/___/ /  ___
+echoApp         |  / _// __/ _ \/ _ \
+echoApp         | /___/\__/_//_/\___/ v4.9.0
+echoApp         | High performance, minimalist Go web framework
+echoApp         | https://echo.labstack.com
+echoApp         | ____________________________________O/_______
+echoApp         |                                     O\
+echoApp         | ⇨ http server started on [::]:58587
+🐰 Keploy: 2026-03-18T19:51:57.913466532+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-0/tests", "testcase name": "test-1"}
+🐰 Keploy: 2026-03-18T19:52:09.337705537+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-0/tests", "testcase name": "test-2"}
+🐰 Keploy: 2026-03-18T19:52:16.650467672+05:30  INFO    🟠 Keploy has captured test cases for the user's application.   {"path": "/home/burning_hoax/Self/keploynew/samples-go/echo-sql/keploy/test-set-0/tests", "testcase name": "test-3"}
+^CSignal received: interrupt, canceling context...
+🐰 Keploy: 2026-03-18T19:52:27.86848853+05:30   INFO    Stopping Keploy recording...
+Gracefully Stopping... press Ctrl+C again to force
+Container echoApp Stopping 
+Container echoApp Stopped 
+Container postgresDb Stopping 
+Container keploy-v3-f31a Stopping 
+Container postgresDb Stopped 
+Container keploy-v3-f31a Stopped 
+w Enable Watch   d Detach
+🐰 Keploy: 2026-03-18T19:52:29.873531062+05:30  INFO    Cleaning up running operations...
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ keploy test -c "docker compose up" --container-name "echoApp" --build-delay 50
+🐰 Keploy: 2026-03-18T19:52:45.406353872+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:52:45.446881732+05:30  WARN    Delay is set to 5 seconds, incase your app takes more time to start use --delay to set custom delay
+🐰 Keploy: 2026-03-18T19:52:45.446949423+05:30  INFO    Example usage: keploy test -c "/path/to/user/app" --delay 6
+🐰 Keploy: 2026-03-18T19:52:45.447131294+05:30  INFO    Test Sets to be Replayed        {"testSets": ["test-set-0"]}
+🐰 Keploy: 2026-03-18T19:52:45.447212367+05:30  WARN    failed to detect language, skipping coverage caluclation. please use --language to manually set the language
+🐰 Keploy: 2026-03-18T19:52:45.448637967+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T19:52:46.25971109+05:30   WARN    Failed to Authenticate user, continuing with local mock if present   {"reason": "failed to authenticate: Error in validating the github user"}
+🐰 Keploy: 2026-03-18T19:52:46.259818258+05:30  INFO    running {"test-set": "test-set-0", "attempt": 1}
+🐰 Keploy: 2026-03-18T19:52:46.261612255+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] up 2/2
+ ✔ Container keploy-v3-f31a Recreated                                                                                     0.1s
+ ✔ Container echoApp        Recreated                                                                                     0.1s
+Attaching to echoApp, keploy-v3-164d, postgresDb
+Container postgresDb Waiting 
+Container keploy-v3-164d Waiting 
+postgresDb  | 2026-03-18 14:22:46.693 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb  | 2026-03-18 14:22:46.693 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:46Z        INFO    Generated config file based on the flags that are used
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:46Z        INFO    Starting the agent in   {"mode": "test"}
+postgresDb      | 2026-03-18 14:22:46.697 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:22:46.708 UTC [24] LOG:  database system was shut down at 2026-03-18 14:22:27 UTC
+postgresDb      | 2026-03-18 14:22:46.713 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    recording start boottime set    {"ns": 10965148905870}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Proxy started at port:16789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Starting Agent's HTTP server on :       {"port": 39945}
+Container postgresDb Healthy 
+Container keploy-v3-164d Healthy 
+echoApp         | {"level":"info","ts":1773843772.2282376,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773843772.228282,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773843772.2283018,"caller":"app/handler.go:55","msg":"Pinging database..."}
+echoApp         | {"level":"info","ts":1773843772.253145,"caller":"app/handler.go:61","msg":"Ping successful"}
+echoApp         | {"level":"info","ts":1773843772.253174,"caller":"app/handler.go:64","msg":"Creating table if not exists..."}
+echoApp         | {"level":"info","ts":1773843772.2567344,"caller":"app/handler.go:69","msg":"Table creation check passed"}
+echoApp         | {"level":"info","ts":1773843772.2567716,"caller":"app/main.go:63","msg":"Database connection established successfully"}
+echoApp         | 
+echoApp         |    ____    __
+echoApp         |   / __/___/ /  ___
+echoApp         |  / _// __/ _ \/ _ \
+echoApp         | /___/\__/_//_/\___/ v4.9.0
+echoApp         | High performance, minimalist Go web framework
+echoApp         | https://echo.labstack.com
+echoApp         | ____________________________________O/_______
+echoApp         |                                     O\
+echoApp         | ⇨ http server started on [::]:8082
+🐰 Keploy: 2026-03-18T19:52:54.27740506+05:30   INFO    starting test for       {"test case": "test-1", "test set": "test-set-0"}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:54Z        WARN    self-healing per-kind tree: global update succeeded but per-kind missed       {"kind": "PostgresV2", "mockName": "mock-13", "testModeInfo": {"Id":13,"sortOrder":58}}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:54Z        WARN    self-healing per-kind tree: global update succeeded but per-kind missed       {"kind": "PostgresV2", "mockName": "mock-14", "testModeInfo": {"Id":14,"sortOrder":59}}
+Testrun passed for testcase with id: "test-1"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.295863906+05:30  INFO    result  {"testcase id": "test-1", "testset id": "test-set-0", "passed": "true"}
+🐰 Keploy: 2026-03-18T19:52:54.296263926+05:30  INFO    starting test for       {"test case": "test-2", "test set": "test-set-0"}
+Testrun passed for testcase with id: "test-2"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.336757824+05:30  INFO    result  {"testcase id": "test-2", "testset id": "test-set-0", "passed": "true"}
+🐰 Keploy: 2026-03-18T19:52:54.337879518+05:30  INFO    starting test for       {"test case": "test-3", "test set": "test-set-0"}
+Testrun passed for testcase with id: "test-3"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.355564836+05:30  INFO    result  {"testcase id": "test-3", "testset id": "test-set-0", "passed": "true"}
+
+ <=========================================> 
+  TESTRUN SUMMARY. For test-set: "test-set-0"
+        Total tests:        3
+        Total test passed:  3
+        Total test failed:  0
+        Time Taken:         "8.10 s"
+ <=========================================> 
+
+Gracefully Stopping... press Ctrl+C again to force
+Container echoApp Killing 
+Container keploy-v3-164d Killing 
+Container postgresDb Killing 
+Container echoApp Stopping 
+Container echoApp Killed 
+Container echoApp Stopped 
+Container keploy-v3-164d Stopping 
+Container postgresDb Stopping 
+Container postgresDb Killed 
+Container postgresDb Stopped 
+Container keploy-v3-164d Killed 
+Container keploy-v3-164d Stopped 
+
+🐰 Keploy: 2026-03-18T19:52:56.36014238+05:30   WARN    To enable storing mocks in cloud, please use --disableMockUpload=false flag or test:disableMockUpload:false in config file
+🐰 Keploy: 2026-03-18T19:52:56.360181091+05:30  INFO    Cleaning up running operations...
+
+ <=========================================> 
+  COMPLETE TESTRUN SUMMARY. 
+        Total tests: 3
+        Total test passed: 3
+        Total test failed: 0
+        Total time taken: "8.10 s"
+
+        Test Suite Name         Total Test      Passed          Failed          Time Taken
+
+        "test-set-0"            3               3               0               "8.10 s"
+<=========================================> 
+
+🐰 Keploy: 2026-03-18T19:52:56.702663485+05:30  INFO    stopping Keploy {"reason": "replay completed successfully"}
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ history -a
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ tail -n 1000 ~/.bash_history > my_commands.txt
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$ 

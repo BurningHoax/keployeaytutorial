@@ -1,0 +1,344 @@
+import { Callout } from "@/components/Callout";
+import TroubleshootingTable from "@/components/TroubleshootingTable";
+
+export const metadata = {
+  title: "Keploy Go Quickstart — Echo + Postgres",
+};
+
+# Keploy Quickstart: Echo + Postgres
+
+**Keploy** is an open-source testing tool that automatically generates test cases by recording your API traffic — no manual test writing required. This tutorial walks you through setting it up with a Go app using the **Echo** web framework and **PostgreSQL**.
+
+By the end, you'll have real integration tests generated from live traffic, running entirely from your terminal.
+
+---
+
+## Prerequisites
+
+Before you start, make sure you have the following installed:
+
+- [Go](https://go.dev/dl/) (v1.21 or later)
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+- [Git](https://git-scm.com/)
+
+<Callout type="tip" title="Linux or macOS recommended">
+  Keploy's eBPF-based traffic capture works natively on Linux and macOS. On
+  Windows, use **WSL 2** with a Linux distro — the steps below are for a Linux
+  environment.
+</Callout>
+
+---
+
+## Step 1 — Install Keploy
+
+Run the one-line installer:
+
+```bash
+curl --silent -O -L https://keploy.io/install.sh && source install.sh
+```
+
+Verify it worked:
+
+```bash
+keploy --version
+```
+
+You should see something like `keploy v2.x.x`. If the command isn't found, restart your terminal.
+
+---
+
+## Step 2 — Clone the Sample App
+
+```bash
+burning_hoax@Nishant-mint:~/Self/keploynew$ git clone https://github.com/keploy/samples-go.git && cd samples-go/echo-sql
+```
+
+-`On successful completion you'll see something like this`
+
+```Cloning into 'samples-go'...
+remote: Enumerating objects: 5390, done.
+remote: Counting objects: 100% (526/526), done.
+remote: Compressing objects: 100% (249/249), done.
+remote: Total 5390 (delta 376), reused 291 (delta 275), pack-reused 4864 (from 2)
+Receiving objects: 100% (5390/5390), 135.32 MiB | 2.97 MiB/s, done.
+Resolving deltas: 100% (3683/3683), done.
+```
+
+-Then use this command
+
+```
+burning_hoax@Nishant-mint:~/Self/keploynew/samples-go/echo-sql$go mod download
+```
+
+The key files in this project:
+
+- `main.go` — bootstraps the Echo server on port `8082`
+- `handler.go` — route handlers for creating and fetching URLs
+- `db.go` — PostgreSQL connection and query logic
+- `docker-compose.yml` — spins up a Postgres instance
+
+---
+
+## Step 3 — Clean Up Previous Containers (if needed)
+
+If you've run Keploy before, clean up any leftover containers to avoid naming conflicts:
+
+```bash
+docker compose down -v
+```
+
+This removes all containers and volumes associated with the compose setup.
+
+---
+
+## Step 4 — Record Test Cases
+
+This is the core Keploy workflow. Instead of writing tests by hand, you **record them from real traffic**.
+
+Start the app and Postgres under Keploy's recorder using Docker Compose:
+
+```bash
+keploy record -c "docker compose up" --container-name "echoApp" --build-delay 50
+```
+
+**Key flags:**
+
+- `--container-name "echoApp"` — specifies the container name to record
+- `--build-delay 50` — waits 50 seconds for the app to start (increase if needed)
+
+Keploy boots your app via Docker Compose, intercepts all network calls (HTTP in, Postgres out), and saves them as test cases. Watch the logs until you see:
+
+```
+⇨ http server started on [::]:50732
+```
+
+Now, in a **second terminal**, fire a few real requests:
+
+**Create a URL entry - Example 1:**
+
+```bash
+curl --request POST \
+  --url http://localhost:8082/url \
+  --header 'content-type: application/json' \
+  --data '{
+  "url": "https://www.linkedin.com/in/burninghoax"
+}'
+```
+
+Response:
+
+```json
+{ "ts": 1773843729330422855, "url": "http://localhost:8082/BRo9mtSH" }
+```
+
+**Create a URL entry - Example 2:**
+
+```bash
+curl --request POST \
+  --url http://localhost:8082/url \
+  --header 'content-type: application/json' \
+  --data '{
+  "url": "https://google.com"
+}'
+```
+
+Response:
+
+```json
+{ "ts": 1773843736646358824, "url": "http://localhost:8082/Lhr4BWAi" }
+```
+
+**Fetch all entries:**
+
+```bash
+curl http://localhost:8082/url
+```
+
+**Fetch a specific entry:**
+
+```bash
+curl http://localhost:8082/BRo9mtSH
+```
+
+Stop the recorder with `Ctrl+C` when done.
+
+<Callout type="tip" title="What just got saved?">
+  Keploy wrote YAML files under `./keploy/` — one per request. Each file
+  captures the full HTTP exchange plus every Postgres query made during that
+  request, stored as mocks.
+</Callout>
+
+---
+
+## Step 5 — Run the Tests
+
+Replay everything Keploy recorded using the same Docker Compose approach:
+
+```bash
+keploy test -c "docker compose up" --container-name "echoApp" --build-delay 50
+```
+
+Keploy will:
+
+1. Start your app
+2. Replay each recorded HTTP request
+3. Intercept outgoing Postgres calls and return the saved mocks
+4. Compare the live response against the recorded one
+
+A successful test run (after recording your requests) looks like this:
+
+```
+🐰 Keploy: 2026-03-18T19:52:45.406353872+05:30  INFO    Docker command detected, re-executing with sudo for elevated privileges...
+
+       ▓██▓▄
+    ▓▓▓▓██▓█▓▄
+     ████████▓▒
+          ▀▓▓███▄      ▄▄   ▄               ▌
+         ▄▌▌▓▓████▄    ██ ▓█▀  ▄▌▀▄  ▓▓▌▄   ▓█  ▄▌▓▓▌▄ ▌▌   ▓
+       ▓█████████▌▓▓   ██▓█▄  ▓█▄▓▓ ▐█▌  ██ ▓█  █▌  ██  █▌ █▓
+      ▓▓▓▓▀▀▀▀▓▓▓▓▓▓▌  ██  █▓  ▓▌▄▄ ▐█▓▄▓█▀ █▓█ ▀█▄▄█▀   █▓█
+       ▓▌                           ▐█▌                   █▌
+        ▓
+
+version: 3.3.45
+
+🐰 Keploy: 2026-03-18T19:52:45.446881732+05:30  WARN    Delay is set to 5 seconds, incase your app takes more time to start use --delay to set custom delay
+🐰 Keploy: 2026-03-18T19:52:45.446949423+05:30  INFO    Example usage: keploy test -c "/path/to/user/app" --delay 6
+🐰 Keploy: 2026-03-18T19:52:45.447131294+05:30  INFO    Test Sets to be Replayed        {"testSets": ["test-set-0"]}
+🐰 Keploy: 2026-03-18T19:52:45.447212367+05:30  WARN    failed to detect language, skipping coverage caluclation. please use --language to manually set the language
+🐰 Keploy: 2026-03-18T19:52:45.448637967+05:30  INFO    Running application using a temporary Keploy-generated Docker Compose file (will be cleaned up automatically) {"cmd": "docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app", "composePath": "docker-compose-tmp.yaml"}
+🐰 Keploy: 2026-03-18T19:52:46.25971109+05:30   WARN    Failed to Authenticate user, continuing with local mock if present   {"reason": "failed to authenticate: Error in validating the github user"}
+🐰 Keploy: 2026-03-18T19:52:46.259818258+05:30  INFO    running {"test-set": "test-set-0", "attempt": 1}
+🐰 Keploy: 2026-03-18T19:52:46.261612255+05:30  INFO    Starting Application:   {"executing_cmd": "/usr/bin/sh -c docker compose -f ./docker-compose-tmp.yaml up --abort-on-container-exit --exit-code-from go-app"}
+WARN[0000] /home/burning_hoax/Self/keploynew/samples-go/echo-sql/docker-compose-tmp.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+[+] up 2/2
+ ✔ Container keploy-v3-f31a Recreated                                                                                     0.1s
+ ✔ Container echoApp        Recreated                                                                                     0.1s
+Attaching to echoApp, keploy-v3-164d, postgresDb
+Container postgresDb Waiting
+Container keploy-v3-164d Waiting
+postgresDb  | 2026-03-18 14:22:46.693 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresDb  | 2026-03-18 14:22:46.693 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:46Z        INFO    Generated config file based on the flags that are used
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:46Z        INFO    Starting the agent in   {"mode": "test"}
+postgresDb      | 2026-03-18 14:22:46.697 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresDb      | 2026-03-18 14:22:46.708 UTC [24] LOG:  database system was shut down at 2026-03-18 14:22:27 UTC
+postgresDb      | 2026-03-18 14:22:46.713 UTC [1] LOG:  database system is ready to accept connections
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    recording start boottime set    {"ns": 10965148905870}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    starting UDP DNS server at addr :26789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    starting TCP DNS server at addr :26789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Keploy has taken control of the DNS resolution mechanism, your application may misbehave if you have provided wrong domain name in your application code.
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Proxy started at port:16789
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:48Z        INFO    Starting Agent's HTTP server on :       {"port": 39945}
+Container postgresDb Healthy
+Container keploy-v3-164d Healthy
+echoApp         | {"level":"info","ts":1773843772.2282376,"caller":"app/main.go:35","msg":"Starting application..."}
+echoApp         | {"level":"info","ts":1773843772.228282,"caller":"app/main.go:45","msg":"Waiting for database connection..."}
+echoApp         | {"level":"info","ts":1773843772.2283018,"caller":"app/handler.go:55","msg":"Pinging database..."}
+echoApp         | {"level":"info","ts":1773843772.253145,"caller":"app/handler.go:61","msg":"Ping successful"}
+echoApp         | {"level":"info","ts":1773843772.253174,"caller":"app/handler.go:64","msg":"Creating table if not exists..."}
+echoApp         | {"level":"info","ts":1773843772.2567344,"caller":"app/handler.go:69","msg":"Table creation check passed"}
+echoApp         | {"level":"info","ts":1773843772.2567716,"caller":"app/main.go:63","msg":"Database connection established successfully"}
+echoApp         |
+echoApp         |    ____    __
+echoApp         |   / __/___/ /  ___
+echoApp         |  / _// __/ _ \/ _ \
+echoApp         | /___/\__/_//_/\___/ v4.9.0
+echoApp         | High performance, minimalist Go web framework
+echoApp         | https://echo.labstack.com
+echoApp         | ____________________________________O/_______
+echoApp         |                                     O\
+echoApp         | ⇨ http server started on [::]:8082
+🐰 Keploy: 2026-03-18T19:52:54.27740506+05:30   INFO    starting test for       {"test case": "test-1", "test set": "test-set-0"}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:54Z        WARN    self-healing per-kind tree: global update succeeded but per-kind missed       {"kind": "PostgresV2", "mockName": "mock-13", "testModeInfo": {"Id":13,"sortOrder":58}}
+keploy-v3-164d  | 🐰 Keploy(agent): 2026-03-18T14:22:54Z        WARN    self-healing per-kind tree: global update succeeded but per-kind missed       {"kind": "PostgresV2", "mockName": "mock-14", "testModeInfo": {"Id":14,"sortOrder":59}}
+Testrun passed for testcase with id: "test-1"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.295863906+05:30  INFO    result  {"testcase id": "test-1", "testset id": "test-set-0", "passed": "true"}
+🐰 Keploy: 2026-03-18T19:52:54.296263926+05:30  INFO    starting test for       {"test case": "test-2", "test set": "test-set-0"}
+Testrun passed for testcase with id: "test-2"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.336757824+05:30  INFO    result  {"testcase id": "test-2", "testset id": "test-set-0", "passed": "true"}
+🐰 Keploy: 2026-03-18T19:52:54.337879518+05:30  INFO    starting test for       {"test case": "test-3", "test set": "test-set-0"}
+Testrun passed for testcase with id: "test-3"
+
+--------------------------------------------------------------------
+
+🐰 Keploy: 2026-03-18T19:52:54.355564836+05:30  INFO    result  {"testcase id": "test-3", "testset id": "test-set-0", "passed": "true"}
+
+ <=========================================>
+  TESTRUN SUMMARY. For test-set: "test-set-0"
+        Total tests:        3
+        Total test passed:  3
+        Total test failed:  0
+        Time Taken:         "8.10 s"
+ <=========================================>
+
+```
+
+If a test fails, Keploy prints a diff showing exactly which field changed — invaluable when you modify a handler and need to catch regressions before they ship.
+
+---
+
+## Step 6 — (Optional) Inspect the Test Files
+
+Keploy organizes tests in sets. View a recorded test:
+
+```bash
+cat keploy/test-set-2/tests/test-1.yaml
+```
+
+You'll see the full picture — request headers, body, status code, and every Postgres query mocked out. Test sets are created under `./keploy/` with this structure:
+
+```
+keploy/
+├── test-set-0/
+│   ├── tests/
+│   │   └── test-1.yaml
+│   └── mocks.yaml
+├── test-set-1/
+│   └── mocks.yaml
+└── test-set-2/
+    ├── tests/
+    │   ├── test-1.yaml
+    │   ├── test-2.yaml
+    │   └── ...
+    └── mocks.yaml
+```
+
+These files are human-readable and version-controlled, so they travel with your codebase.
+
+<Callout type="warning" title="Don't commit secrets">
+  If your app passes API keys or tokens in headers, review the YAMLs before
+  committing. Keploy captures headers verbatim.
+</Callout>
+
+---
+
+## Why This Matters
+
+Traditional integration tests require you to:
+
+- Write fixture data
+- Mock your database manually
+- Update mocks every time a query changes
+
+Keploy inverts this: **use your app once, get the tests for free.** The mocks come from real Postgres behavior, not hand-written stubs, so they actually reflect what your code does.
+
+---
+
+## Troubleshooting
+
+<TroubleshootingTable />
+
+---
+
+## Next Steps
+
+- Explore other quickstarts at [keploy.io/docs](https://keploy.io/docs)
+- Try the **Gin + MongoDB** sample for a NoSQL-backed app
+- Integrate `keploy test` into your CI pipeline — GitHub Actions config is in the docs
