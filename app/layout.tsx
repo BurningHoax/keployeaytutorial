@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Keploy Go Quickstart — Tutorial",
   description:
-    "A beginner-friendly guide to running Keploy with a Go Gin + MongoDB application.",
+    "A beginner-friendly guide to running Keploy with a Go Echo + Postgres application.",
 };
 
 export default function RootLayout({
