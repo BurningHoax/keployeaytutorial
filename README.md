@@ -1,6 +1,6 @@
 # Keploy Go Quickstart — Tutorial Site
 
-A single-page documentation website built with **Next.js** and **MDX** for the [Keploy](https://keploy.io) DevRel candidate assignment. The tutorial walks a Go developer through recording and replaying integration tests using the Echo + PostgreSQL sample app.
+A single-page documentation website built with **Next.js** and **MDX** for [Keploy's](https://keploy.io) Dev user Community. The tutorial walks a Go developer through recording and replaying integration tests using the Echo + PostgreSQL sample app.
 
 ## Live Demo
 
