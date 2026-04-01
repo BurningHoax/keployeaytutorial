@@ -52,13 +52,3 @@ The `<Callout>` component is available anywhere in MDX:
 ```
 
 Supported types: `info` · `tip` · `warning` · `danger`
-
-## Deployment
-
-Push to GitHub and import the repo on [Vercel](https://vercel.com). No extra configuration needed — Vercel detects Next.js automatically.
-
-```bash
-git add .
-git commit -m "initial commit"
-git push origin main
-```
