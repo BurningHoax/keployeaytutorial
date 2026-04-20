@@ -4,7 +4,7 @@ A single-page documentation website built with **Next.js** and **MDX** for [Kepl
 
 ## Live Demo
 
-> (https://keployeaytutorial.vercel.app/)
+> [Keploy's Go Kickstart Tutorial](https://keployeaytutorial.vercel.app)
 
 ## Stack
 
