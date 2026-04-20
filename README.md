@@ -4,7 +4,7 @@ A single-page documentation website built with **Next.js** and **MDX** for [Kepl
 
 ## Live Demo
 
-> (https://keployeaytutorial-ouk5ue057-burninghoaxs-projects.vercel.app/)
+> (https://keployeaytutorial.vercel.app/)
 
 ## Stack
 
